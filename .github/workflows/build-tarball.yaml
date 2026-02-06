@@ -1,0 +1,23 @@
+name: Create and Upload TAR.XZ Archive
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build-and-package:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Create tar.xz archive
+        run: tar -cJf my-archive-$(date +%Y-%m-%d).tar.xz .
+
+      - name: Upload archive as artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: packaged-archive
+          path: '*.tar.xz'
+
